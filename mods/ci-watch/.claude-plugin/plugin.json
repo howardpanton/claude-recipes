@@ -1,0 +1,6 @@
+{
+  "name": "ci-watch",
+  "version": "0.1.0",
+  "description": "Status line and /ci pane for Jenkins jobs: latest builds, paused approval gates, aborted deploys that may still have applied",
+  "types": "./types/index.d.ts"
+}

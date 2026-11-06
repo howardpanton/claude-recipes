@@ -1,0 +1,17 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "MultiEdit",
+  "tool_input": {
+    "file_path": "/work/repo/apps/search/src/notify.ts",
+    "edits": [
+      {
+        "old_string": "const a = 1;",
+        "new_string": "const a = 2;"
+      },
+      {
+        "old_string": "token: \"\"",
+        "new_string": "token: \"@@SECRET@@\""
+      }
+    ]
+  }
+}
