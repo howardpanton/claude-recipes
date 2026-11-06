@@ -1,0 +1,23 @@
+{
+  "skill_name": "assess-ticket",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Can you review PROJ-123 and tell me if it's ready to develop?",
+      "expected_output": "A structured assessment covering user story, acceptance criteria, NFRs, test impact, codebase impact and dependencies. Flags that the ACs are step-level prose rather than GIVEN/WHEN/THEN, notes the i18n gap (hard-coded strings) and names the shared component in libs/shared/ui as affected code.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Review PROJ-123 - does it have good acceptance criteria?",
+      "expected_output": "A focused AC assessment: flags that the existing ACs are high-level prose, lists the missing edge cases (validation shown before any interaction, stale error after the input is cleared) and proposes concrete GIVEN/WHEN/THEN additions.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Assess PROJ-123 and update the ticket with your findings",
+      "expected_output": "Full assessment presented first and confirmation asked for. After the go-ahead, the ticket description is enriched in place: the author's story and context are kept verbatim, ACs are sharpened and missing sections are appended. The original description is never replaced wholesale.",
+      "files": []
+    }
+  ]
+}

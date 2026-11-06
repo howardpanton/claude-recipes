@@ -1,0 +1,9 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Edit",
+  "tool_input": {
+    "file_path": "/work/repo/tools/deploy.sh",
+    "old_string": "KEY=\"\"",
+    "new_string": "KEY=\"@@SECRET@@\""
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "repo-guards",
+  "version": "0.1.0",
+  "description": "Monorepo guards: verified gitlink SHAs, no reverts that discard edits, ASCII-only CI pipeline files, a push whose gate ran nothing proves nothing, PR merges stay human, PR destination and age checks"
+}

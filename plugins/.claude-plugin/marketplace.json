@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-recipes",
+  "description": "Portable Claude Code plugins from the claude-recipes library.",
+  "owner": {
+    "name": "claude-recipes"
+  },
+  "plugins": [
+    {
+      "name": "handover",
+      "description": "Session handover documents built for a machine reader: every claim carries evidence, and resuming verifies before it trusts.",
+      "source": "./handover",
+      "category": "productivity"
+    }
+  ]
+}

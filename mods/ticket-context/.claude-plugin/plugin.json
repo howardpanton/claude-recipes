@@ -1,0 +1,6 @@
+{
+  "name": "ticket-context",
+  "version": "0.1.0",
+  "description": "Status line and /ticket pane: the Jira ticket or GitHub issue behind the current branch, the branch, its worktree, and its related PRs",
+  "types": "./types/index.d.ts"
+}

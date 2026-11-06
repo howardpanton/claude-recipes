@@ -1,0 +1,155 @@
+# CLAUDE.md
+
+Guidance for Claude Code in this repository. This file holds the universal rules; deep
+operational knowledge lives in the skill library (`.claude/skills/`). Invoke the owning skill
+before working in its area (routing table below).
+
+## What this repo is
+
+<One line: what the product does and who uses it.>
+<One line: the shape. E.g. "An Angular monorepo of git submodules: each `apps/*` is its own
+repository; `libs/shared/*` and `src/` belong to the parent repo. Before editing, confirm which
+repo owns the file: committing in the wrong repo, or bumping a submodule pointer by accident,
+is a real and recurring failure.">
+
+## Non-negotiables
+
+These are the rules most often broken by past sessions. They are not optional.
+
+1. **Prior art before new code.** Before writing any new component, service or pattern,
+   search `libs/shared/*` and the sibling apps for an existing one. In your plan or PR, name
+   the pattern you followed, or state explicitly that none exists. Never duplicate what
+   `libs/shared/ui` or an existing data service already provides.
+2. **Evidence before "done".** Never claim a change works without showing proof:
+   - Run the affected unit tests **with coverage** and paste the actual output. "Tests pass"
+     without numbers is an unverified claim.
+   - Run the linter on every changed source file (`<lint-cmd>`), mirroring the pre-push hook.
+   - For anything user-visible: run the app (dev server or mock server) and show a
+     screenshot or snapshot of the behaviour. When behaviour in an E2E-covered area changed,
+     run the matching E2E suite.
+3. **The deliverable is an open PR with evidence.** Finished coding work ends with the branch
+   pushed and a PR to `<integration-branch>` whose description includes the test results and
+   the coverage proof. **A human merges. Never merge yourself.**
+
+## Commands
+
+```bash
+<install-cmd>                             # Install dependencies
+git submodule update --init --recursive   # Once after clone (delete if no submodules)
+<start-cmd>                               # Dev server at http://localhost:<port>
+<lint-cmd> [project]                      # Lint one project
+<test-cmd>                                # All unit tests, once
+<test-cmd> --testFile=<path>              # One test file
+<coverage-cmd>                            # Unit tests with coverage
+<e2e-cmd>                                 # E2E, headless, always against the mock server
+<e2e-cmd>:<domain>                        # E2E for one domain
+```
+
+Local auth setup, toolchain versions and environment recovery: the `<setup-skill>` skill.
+
+## Architecture
+
+```
+src/app/          # App shell: routing, global init, composition only. No business logic.
+apps/             # Feature apps, lazy-loaded by the shell
+libs/shared/      # Cross-app utilities, services, components (parent repo)
+```
+
+- Apps are consumed through `@scope/*` path aliases. Always import through each package's
+  `index.ts` barrel, never deep paths.
+- Key aliases: `@scope/data-access` (API services, guards, resolvers, models), `@scope/ui`
+  (design system), `@scope/utils`, `@scope/testing`.
+- **Data services**: everything in `libs/shared/data-access` extends `<BaseDataService>`
+  (HTTP CRUD, loading state, observable streams). API URLs resolve from the active tenant in
+  `sessionStorage`.
+- **State**: <RxJS in services; Signals for simple local component state; no global store>.
+- **Auth**: <provider>, bootstrapped via `APP_INITIALIZER`; routes behind `AuthGuard`;
+  permissions via `PermissionService`.
+- **Feature flags**: inject `<FlagsService>`, call `isFeatureEnabled('flag-key')`. Inventory
+  of record: `docs/feature-flags.md`. Loader mechanics: the `<config-skill>` skill.
+
+Load-bearing invariants, deliberate weak points and what you must not refactor: the
+`architecture-contract` skill. Domain vocabulary: the `<domain-skill>` skill.
+
+## Skill routing
+
+Invoke the owning skill **before** starting work in its area.
+
+| Task | Skill |
+| --- | --- |
+| Start a ticket (branches, worktree) | `start-ticket` |
+| Assess or improve a ticket | `assess-ticket` |
+| Write a new ticket | `write-ticket` |
+| Full autonomous ticket run (assess -> plan -> develop -> test -> review) | `ticket-pipeline` |
+| Review a PR, branch or diff | `pr-review` |
+| Write a PR title and description | `pr-description` |
+| Branching, commit format, gate bypasses, submodule bumps | `change-control` |
+| "How do I prove this works?" / the coverage gate | `validation-and-qa` |
+| End-of-session handover | `handover` |
+| Execute a test plan in the browser, record evidence | `browser-qa` |
+| Plan QA for a release | `qa-test-planner` |
+| Bug / failing test / runtime error | `debugging-playbook` |
+| Slow pages, perf NFRs, "is it actually faster?" | `performance-experiments` |
+| States, information architecture, copy, UX critique | `ux-design` |
+| Colour, contrast, focus, ARIA | `accessibility` |
+| Design ticket or design spike | `design-ticket` |
+| Unattended sprint run while you are away | `agent-run-sprint` |
+| Audit and remove stale worktrees | `tidy-worktrees` |
+| Docs, CLAUDE.md, skill maintenance | `docs-and-writing` |
+| Design decisions that touch shared plumbing | `architecture-contract` |
+
+## Code style
+
+@.claude/instructions/coding-guidelines.md
+@.claude/instructions/security.md
+
+- New components must be standalone. No new NgModules.
+- Modern control flow: `@if`, `@for`, `@switch`, not `*ngIf` / `*ngFor`.
+- Component selector prefix `app-` (kebab-case); directive prefix `app` (camelCase).
+- Styling: <utility classes first; a stylesheet only when utilities cannot express it>.
+  Design system: `DESIGN.md`; colour and contrast rules: the `accessibility` skill.
+
+## Git: branches, commits, releases
+
+- Branch names: `feature/PROJ-123-description`.
+- Never push directly to `<integration-branch>` or `<release-branch>`. PRs target
+  `<integration-branch>`.
+- Commit format:
+  - **Ticket work**: `[PROJ-123] Description`. Ticket-prefixed commits have no conventional
+    type and never trigger a release.
+  - **Everything else**: conventional `type(scope): subject`.
+- **Release trap**: on `<integration-branch>`, semantic-release cuts a release from the
+  conventional commits. If the config maps `docs:`, `chore:`, `test:`, `ci:`, `style:` and
+  `build:` to a **patch** and `refactor:` to a **minor**, every "harmless" commit consumes a
+  version. Use the scope `no-release` (`docs(no-release): ...`) when a change must not.
+- Pipeline tokens (your own list, e.g. `[skip ci]`, `[skip test]`, `[e2e:all]`,
+  `[e2e:<domain>]`); details in the `<run-skill>` skill.
+
+## Pre-push quality gate
+
+The `pre-push` hook enforces automatically:
+
+1. The linter must pass on all changed source files.
+2. Every changed `*.component.ts` (and `.service.ts`, `.directive.ts`, ...) must have a
+   sibling `*.spec.ts`.
+3. Unit tests run on affected files with coverage; global thresholds of
+   `<coverage-threshold>` (80%) for statements, branches, functions and lines.
+
+Bypass (`git push --no-verify`) is for hotfixes only; document the rationale in the PR
+description. A hook in `.claude/settings.json` stops Claude from using it at all.
+
+## Testing notes
+
+- Unit test config: `<jest-config>` for the shell; each app has its own. Coverage output:
+  `coverage/<app>/`.
+- E2E always runs against the **mock server**, never a live environment. E2E intercepts the
+  feature-flag file; fixture patterns in `<e2e-support-dir>`.
+- Test-layer selection and what evidence counts: the `validation-and-qa` skill.
+
+## Session hooks (already automated, don't duplicate)
+
+`.claude/settings.json` blocks edits to protected files (`.env`, lockfiles,
+`<bot-managed-config>`), blocks credential-shaped content, blocks `git push --no-verify` and
+pushes to protected branches, blocks commits that stage a submodule pointer by accident, and
+auto-runs the formatter on written source files. Don't hand-format, and don't try to edit
+those protected files. Scripts and their tests: `.claude/hooks/`.

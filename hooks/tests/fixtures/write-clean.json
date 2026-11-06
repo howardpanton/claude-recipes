@@ -1,0 +1,8 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Write",
+  "tool_input": {
+    "file_path": "/work/repo/apps/billing/src/app/totals.ts",
+    "content": "export const total = (items: number[]): number => items.reduce((a, b) => a + b, 0);\n"
+  }
+}

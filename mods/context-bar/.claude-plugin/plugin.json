@@ -1,0 +1,6 @@
+{
+  "name": "context-bar",
+  "version": "0.1.0",
+  "description": "A live context-window bar above the prompt: fill, auto-compact threshold, tokens left, cost and rate limits.",
+  "types": "./types/index.d.ts"
+}

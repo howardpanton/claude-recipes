@@ -1,0 +1,9 @@
+{
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Edit",
+  "tool_input": {
+    "file_path": "/work/repo/.env",
+    "old_string": "A=1",
+    "new_string": "A=2"
+  }
+}
