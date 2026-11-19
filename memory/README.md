@@ -154,5 +154,3 @@ those side effects.
   `05-memory.md`): match your pipeline's names
 - If your pipeline keeps learnings in skills instead, replace the writer's "write a memory
   file" with "append one line to the owning skill" and keep the candidate rule unchanged
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

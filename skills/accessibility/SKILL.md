@@ -124,6 +124,3 @@ name on an interactive control.
 - Name your chip component so reviewers grep for it.
 - If you have a dark and a light theme, add a second worked table.
 - Delete the touch-target line if the product is desktop-only (keep focus and keyboard).
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira,
-Bitbucket, Jenkins).

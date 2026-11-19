@@ -142,5 +142,3 @@ Then update `${HANDOVER_DIR}/00-state.md`: TEST done, REVIEW next.
 ## Final message
 
 3-5 lines: specs added, final coverage, gate status, any production bug hit.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

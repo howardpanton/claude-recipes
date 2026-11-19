@@ -134,6 +134,3 @@ branch.
 - The measurement harness command, or delete the Lighthouse fallback if you have a
   scripted one.
 - Who ratifies a threshold and where the agreement is recorded.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira,
-Bitbucket, Jenkins).

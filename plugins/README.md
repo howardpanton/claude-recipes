@@ -8,20 +8,25 @@ Ready-to-install Claude Code plugins. Each subdirectory is one plugin with its o
 | --- | --- | --- |
 | [handover](handover/) | `/handover:create`, `/handover:resume` | Evidence-backed session handover documents; resume verifies before it trusts |
 
-## Install from this directory as a local marketplace
+The `handover` skill in `skills/handover/` and this plugin are the same recipe in two
+shapes: the skill is the source and is what the `recipes` plugin ships; the plugin splits
+it into two slash commands for people who want only handover.
 
-Claude Code installs plugins from a marketplace. A marketplace can be a local directory
-that contains a `.claude-plugin/marketplace.json` listing its plugins. This directory is
-set up to be one.
+## Install
 
-1. Register this directory as a marketplace (once per machine):
+Claude Code installs plugins from a marketplace: a repo or local directory with a
+`.claude-plugin/marketplace.json` listing its plugins. The manifest for this library is at
+the repository root, so the marketplace is the repo itself.
+
+1. Register the marketplace (once per machine), from GitHub or from a local clone:
 
    ```bash
-   claude plugin marketplace add /path/to/claude-recipes/plugins
+   claude plugin marketplace add howardpanton/claude-recipes
+   claude plugin marketplace add /path/to/claude-recipes     # local clone
    ```
 
    The marketplace name is the `name` field in
-   [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json); here it is
+   [`.claude-plugin/marketplace.json`](../.claude-plugin/marketplace.json); here it is
    `claude-recipes`.
 
 2. Install a plugin from it:
@@ -44,8 +49,7 @@ marketplace: `claude plugin marketplace remove claude-recipes`.
 2. Add `commands/<command>.md` files with frontmatter (`description`, `argument-hint`,
    `allowed-tools`) and the prompt body. `$ARGUMENTS` carries what the user typed after
    the command.
-3. Add the plugin to `.claude-plugin/marketplace.json` with `"source": "./<name>"`.
+3. Add the plugin to the root `.claude-plugin/marketplace.json` with
+   `"source": "./plugins/<name>"`.
 4. Keep the plugin free of anything that identifies a company, host or person; these are
    meant to travel.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

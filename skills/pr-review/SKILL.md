@@ -144,5 +144,3 @@ pre-push reviewer use the same words.
 - Step 4's gate list: copy it from your pre-push hook and root instructions file.
 - `<lint-cmd>`, `<test-cmd>`, `<coverage-threshold>`: your commands and floor.
 - Delete the skill-drift gate if you keep no skill library.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

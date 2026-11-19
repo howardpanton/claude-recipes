@@ -127,5 +127,3 @@ by reverting across it.
 - Section 2's release rules: copy the real list from your `.releaserc`.
 - `<deploy-pin-file>`: name it, or delete Rule 2 if deployments pin elsewhere.
 - Delete section 5 and the child/parent ordering if you have no submodules.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

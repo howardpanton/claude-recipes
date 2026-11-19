@@ -133,6 +133,3 @@ colour-alone, contrast and missing accessible names stay Critical under `accessi
 - Locale file location for the i18n grep in the PR gate.
 - Design system doc name (tokens, type scale, elevation).
 - The vocabulary source your labels must match.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira,
-Bitbucket, Jenkins).

@@ -168,5 +168,3 @@ Good | Gaps | Missing or untestable
   delete the ones it does not.
 - `evals/evals.json`: replace the example prompts with tickets from your own
   backlog once you have human-approved ground truth.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

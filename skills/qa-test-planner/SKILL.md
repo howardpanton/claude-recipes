@@ -146,6 +146,3 @@ re-fetch.
 - Wiki space and title series; delete the Confluence-specific "full-body replace" line if
   your tool appends.
 - The E2E recipe that receives checks proposed for automation.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira,
-Bitbucket, Jenkins).

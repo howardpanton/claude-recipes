@@ -145,5 +145,3 @@ swallowed exceptions; comments that lie about the code.
   skills say what they are).
 - **Never suggest bypassing the hook.** If the gate will fail, the fix is to
   satisfy it; a bypass is a human's emergency decision, documented in the PR.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

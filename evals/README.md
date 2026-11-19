@@ -107,5 +107,3 @@ benchmark ticket so the comparison is mechanical.
   approved assessment) beside this file so scoring needs no tracker access.
 - `<coverage-threshold>`: your gate's number.
 - Git-ignore `.claude/evals/runs/`; commit `.claude/evals/results/`.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

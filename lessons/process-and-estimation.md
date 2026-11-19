@@ -205,5 +205,3 @@ Client-side navigation keeps it; a full reload loses it. The browser extension r
 every collect POST as 503 (cosmetic); the Realtime API proves arrival. Events are batched,
 so count in DebugView or Realtime, not in the URL list. Keep runs short if the development
 stream fans out to production (previous lesson).
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

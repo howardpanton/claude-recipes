@@ -130,5 +130,3 @@ Invoice timestamps show `GMT` again for UK users, instead of `G`.
 - `{{image:N}}`: keep only if your PR tooling resolves placeholders; otherwise paste the host's image markdown directly.
 - Child/Parent PR lines: delete if the repo has no submodules.
 - Title format: match the `change-control` skill's commit convention.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

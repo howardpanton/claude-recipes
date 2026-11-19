@@ -140,5 +140,3 @@ into a committed history file, `<coverage-history-file>` (example name:
 - `<coverage-track-cmd>` and the history file: your trend tooling, or delete section 4.
 - `<e2e-cmd>`: your Cypress/Playwright script prefix; retries from its config.
 - The hook's testable-file patterns: copy them from your pre-push hook.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

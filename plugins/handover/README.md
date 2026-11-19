@@ -56,8 +56,8 @@ overturn them.
 See [../README.md](../README.md) for the local-marketplace install. In short:
 
 ```bash
-claude plugin marketplace add /path/to/claude-recipes/plugins
-claude plugin install handover@<marketplace-name>
+claude plugin marketplace add howardpanton/claude-recipes
+claude plugin install handover@claude-recipes
 ```
 
 Restart Claude Code, then `/handover:create`.

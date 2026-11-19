@@ -123,6 +123,3 @@ If a prior handover's assumption proved wrong this session, say so in the new on
 - `<test-cmd>` and the build command quoted in the Verification block.
 - Which host and tracker tools verify PR and ticket state.
 - Delete the submodule line if your repo has none.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira,
-Bitbucket, Jenkins).

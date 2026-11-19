@@ -155,5 +155,3 @@ starting".
 - Priority names: your tracker's.
 - Estimate rubric: keep or delete; if kept, say where the three scores live.
 - "Where it lives": point at your package layout.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

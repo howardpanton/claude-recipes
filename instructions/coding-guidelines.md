@@ -1,5 +1,8 @@
 # Coding guidelines (repo-specific)
 
+> Worked example for an Angular and TypeScript repo. Keep the shape (short, checkable rules
+> grouped by concern) and replace the content with your own stack's rules.
+
 - Prefer shared building blocks in `libs/shared/*` (especially `libs/shared/ui`) over duplicating UI.
 - Keep business logic in services / data-access; keep components thin.
 - Prefer RxJS Observables for non-trivial async flows; Signals only for simple local state.

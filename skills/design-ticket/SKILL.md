@@ -118,6 +118,3 @@ design mapping consume.
 - The design tool you use for artboards and whether it has an MCP connection.
 - The product owner who signs off and where sign-off is recorded.
 - The pipeline planner's expected heading for the design mapping, if you run one.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira,
-Bitbucket, Jenkins).

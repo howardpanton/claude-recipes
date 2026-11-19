@@ -100,5 +100,3 @@ pinned dependency with a package-manager patch). The shape of the I2 row is the 
 - Name your sibling skills in "When to use" (repo navigator, domain reference, config skill);
   delete the ones you do not have.
 - Add the keep-current rule to your `pr-review` checklist and to the drift audit, if you run one.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

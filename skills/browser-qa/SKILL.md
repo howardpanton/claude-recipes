@@ -158,6 +158,3 @@ whether all static assets share one prefix; how to run locally against an enviro
 - Flag file path and the literal shape of a flag entry.
 - Fill the "Navigation facts for this app" section; it is the part that cannot be generic.
 - Name the E2E recipe that receives checks proposed for automation.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira,
-Bitbucket, Jenkins).

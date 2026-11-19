@@ -217,5 +217,3 @@ npx eslint <changed files>
 ```
 
 and in a worktree run each changed submodule's lint and tests by hand.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

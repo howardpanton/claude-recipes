@@ -1,0 +1,29 @@
+{
+  "skill_name": "pr-review",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Review this branch before I raise the PR. It only bumps the apps/billing submodule pointer.",
+      "expected_output": "Steps into the bumped submodule and reviews the commit range old..new rather than treating the pointer as an opaque hash. Checks the new commit is reachable on the submodule's default branch and says the child PR must merge first. Impact block comes before the findings.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Does this shared-lib change break anyone? I renamed an export in libs/shared/ui/src/index.ts.",
+      "expected_output": "Greps every consumer of the renamed symbol across the shell and all submodules, lists each one by repo, and names the order the repos must land in. Does not claim a break for symbols that never cross a barrel file.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Review PR 42 and fix anything you find.",
+      "expected_output": "A written review only, using the review template with Critical, Major and Minor findings (each with path:line and a concrete fix) and one verdict token. States that the skill is read-only: no edits made, nothing merged. Diff taken with three dots against the integration branch.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Will this branch fail the pre-push gate? I added a new service and changed the coverage threshold in the hook.",
+      "expected_output": "Reads the actual pre-push hook for the gate list instead of assuming it. Flags the missing sibling spec for the new service. Flags as Critical that a skill citing the old threshold was not updated in the same PR (skill-drift gate).",
+      "files": []
+    }
+  ]
+}

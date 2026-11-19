@@ -7,14 +7,14 @@ been generalised: no company, product, host, ticket or person from the original
 repo appears, and every skill ends with an "Adapt to your repo" section naming
 the placeholders to fill in.
 
-The index below is ordered by how often each recipe was actually invoked, so the
-top of each list is the most battle-tested.
+The skills index is ordered roughly by how often each one was used, most used
+first. The order comes from daily use, not from a count.
 
 ## Layout
 
 | Directory | What it holds |
 | --- | --- |
-| `skills/` | 20 skills (`<name>/SKILL.md` plus sibling reference files) |
+| `skills/` | 23 skills (`<name>/SKILL.md` plus sibling reference files) |
 | `agents/` | 10 subagents in Claude Code agent format |
 | `hooks/` | Shell hooks, a `settings.json` hooks block, and a test runner |
 | `mods/` | Four Claude Code mods (TypeScript plugins that guard tool calls or add status-line panes) |
@@ -24,11 +24,32 @@ top of each list is the most battle-tested.
 | `evals/` | The harness-evals pattern for an autonomous ticket pipeline |
 | `instructions/` | Coding and security guideline files for `@`-inclusion from CLAUDE.md |
 | `templates/` | Skeleton for a "how this repo runs" knowledge skill; the config, domain and setup skills that `CLAUDE.md.template` routes to follow the same shape |
+| `examples/` | A filled-in `CLAUDE.md` and a handover document for a fictional repo, to show what the output looks like |
+| `tools/` | `check.sh`: the hook tests, frontmatter, link and scrub checks that CI runs |
 | `CLAUDE.md.template` | The universal-rules shape for a project CLAUDE.md |
 
 ## Install
 
-Project-level (most recipes):
+Prerequisites: `git`, a POSIX `sh`, and [`jq`](https://jqlang.org) (every hook
+reads its event with `jq`; without it the hooks error instead of guarding).
+
+### As a plugin (skills and agents, one step)
+
+```
+/plugin marketplace add howardpanton/claude-recipes
+/plugin install recipes@claude-recipes
+/plugin install handover@claude-recipes
+```
+
+`recipes` carries every skill and agent; skills are then namespaced, for
+example `/recipes:start-ticket PROJ-123`. `handover` adds `/handover:create`
+and `/handover:resume`. The plugin does not install the hooks or the mods:
+both need settings that differ per repo (protected branches, formatter,
+protected files), so they stay a deliberate copy.
+
+### By copying (when you want to edit the recipes)
+
+Project-level:
 
 ```bash
 cp -r skills/* <repo>/.claude/skills/
@@ -43,16 +64,17 @@ from `~/.claude/agents/`. Once installed, a skill can also be invoked as a slash
 command, for example `/start-ticket PROJ-123`.
 
 Mods are enabled by listing their directories in `CLAUDE_CODE_PLUGIN_DIRS` (see
-`mods/README.md`). The handover plugin installs from the local marketplace in
-`plugins/` (see `plugins/README.md`).
+`mods/README.md`). A local clone also works as a marketplace (see
+`plugins/README.md`).
 
-Run the hook tests before trusting a hook in a new repo:
+Run the checks before trusting a hook in a new repo:
 
 ```bash
-sh hooks/tests/run.sh
+sh hooks/tests/run.sh    # the hook guards only
+sh tools/check.sh        # everything CI runs
 ```
 
-## Skills (most used first)
+## Skills (roughly most used first)
 
 | Skill | Use when |
 | --- | --- |
@@ -76,6 +98,12 @@ sh hooks/tests/run.sh
 | `accessibility` | Colour, contrast, status indicators, focus and ARIA in new or changed UI |
 | `agent-run-sprint` | Letting agents carry a sprint's tickets while the engineer is away |
 | `tidy-worktrees` | Auditing worktrees for staleness (report only) |
+| `e2e-coverage-campaign` | Closing an E2E coverage gap systematically: inventory, story-to-spec gap map, per-story runbook, CI wiring |
+| `release-notes` | Turning a release's tickets into customer-facing "what's new" items, with an editorial gate and a sign-off PR |
+| `bug-board-sweep` | Working a labelled bug queue unattended, one ticket per run: check relevance, assess, build to a PR or park with a reason (user-invoked only) |
+
+Not included: a Cypress test-authoring skill. The Cypress team publishes one
+(`cypress-author` in `cypress-io/ai-toolkit`); `e2e-coverage-campaign` points at it.
 
 ## Agents
 
@@ -94,7 +122,7 @@ sh hooks/tests/run.sh
 | --- | --- | --- |
 | `protect-files.sh` | PreToolUse Edit/Write | Blocks edits to secrets, lockfiles and bot-managed config |
 | `block-secrets.sh` | PreToolUse Edit/Write | Blocks content matching credential patterns |
-| `git-guards.sh` | PreToolUse Bash | Blocks `--no-verify`, pushes to or from protected branches, and accidental submodule-pointer commits |
+| `git-guards.sh` | PreToolUse Bash | Blocks `--no-verify`, pushes to or from protected branches, force pushes, hard resets over uncommitted work, and accidental submodule-pointer commits |
 | `format-on-write.sh` | PostToolUse Edit/Write | Runs the formatter on written source files, never fails the call |
 | `telemetry.sh` | Stop, SubagentStop | Appends a token and duration snapshot per run |
 
@@ -128,20 +156,29 @@ ones each skill's Adapt section names (`<release-branch>`, `<deploy-pin-file>`,
 `<handover-dir>`, `<qa-label>` and so on). Branches follow
 `feature/PROJ-123-short-slug`; ticket commits are `[PROJ-123] message`.
 
-## How this library was checked
+## How this library is checked
 
-- Every file was grepped for the original company, product, host, ticket and
-  people names; the library is clean.
-- Every `SKILL.md` has a `name` matching its directory and a third-person
-  "Use when" description under 500 characters.
-- Every agent has frontmatter with `name`, `description` with examples, `tools`
-  and `model`.
-- The hook test runner passes 34 checks, covering the blocking and allowed case
-  of every guard. No file holds a credential-shaped string: the secret-guard
-  fixtures use a placeholder that the runner fills at run time.
-- The four mods were typechecked at authoring time against the generated Claude
-  Code plugin types (not shipped; regenerate them before trusting), and the two
-  mods with unit tests pass `claude plugin test`.
-- An independent review pass checked for leaks a regex misses, broken
-  cross-references and contradictions between recipes, and ran seven retrieval
-  scenarios against the library alone.
+`sh tools/check.sh` runs on every push (see `.github/workflows/check.yml`) and
+locally:
+
+- **Hook tests.** 44 checks covering the blocking and the allowed case of every
+  guard. No file holds a credential-shaped string: the secret-guard fixtures
+  use a placeholder that the runner fills at run time.
+- **Frontmatter.** Every `SKILL.md` has a `name` matching its directory, a "Use
+  when" description of at most 500 characters and an "Adapt to your repo"
+  section. Every agent has `name`, `description`, `tools` and `model`.
+- **Links.** Every relative Markdown link resolves.
+- **Scrub.** No file matches a private pattern of the original company,
+  product, host, ticket and people names. The pattern is not in this repo: it
+  is read from an untracked `.scrub-pattern` file or the `SCRUB_PATTERN`
+  secret, and the check is skipped (and says so) when neither is present.
+
+Checked by hand, not by the script: the four mods were typechecked at authoring
+time against the generated Claude Code plugin types (not shipped; regenerate
+them before trusting), and the two mods with unit tests pass
+`claude plugin test`. Three skills have `evals/evals.json` prompt sets
+(`assess-ticket`, `pr-review`, `write-ticket`).
+
+## Licence
+
+MIT. See [LICENSE](LICENSE). Changes are listed in [CHANGELOG.md](CHANGELOG.md).

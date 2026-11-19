@@ -129,5 +129,3 @@ skill in the same PR. The re-verify table makes it a two-minute job.
 - `docs/feature-flags.md`, the "add a new package" doc: your inventory names.
 - Section 5: copy the real release rules from your `.releaserc`, or delete the trap if you don't run semantic-release.
 - Skill directory: `.claude/skills/` or wherever your library lives.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

@@ -1,15 +1,21 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "claude-recipes",
-  "description": "Portable Claude Code plugins from the claude-recipes library.",
+  "description": "Portable Claude Code skills, subagents and plugins from the claude-recipes library.",
   "owner": {
     "name": "claude-recipes"
   },
   "plugins": [
     {
+      "name": "recipes",
+      "description": "The library's skills and subagents: ticket pipeline, PR review, QA planning, handover, change control and more.",
+      "source": "./",
+      "category": "productivity"
+    },
+    {
       "name": "handover",
       "description": "Session handover documents built for a machine reader: every claim carries evidence, and resuming verifies before it trusts.",
-      "source": "./handover",
+      "source": "./plugins/handover",
       "category": "productivity"
     }
   ]

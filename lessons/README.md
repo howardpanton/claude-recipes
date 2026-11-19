@@ -34,5 +34,3 @@ A lesson graduates here from a memory file (see [../memory/README.md](../memory/
 when it has been true for more than one ticket and would still be true in another repo.
 Strip the identifiers, keep the mechanism, put it in the file whose list above fits, and
 add nothing that the repo's own docs already say.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

@@ -115,5 +115,3 @@ Then update `${HANDOVER_DIR}/00-state.md`: DEVELOP done, TEST next.
 
 3-5 lines: what shipped, files touched, lint and build status, anything the
 tester must know.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

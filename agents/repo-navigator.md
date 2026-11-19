@@ -128,5 +128,3 @@ Never rely on this prompt's description; it drifts.
   asked, say it is outside your mandate and report the map you found.
 - **Admit uncertainty.** If checkout state, a stale pointer or a missing
   barrel makes ownership ambiguous, say so rather than guessing.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

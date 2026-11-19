@@ -18,7 +18,7 @@ there feeds stderr back to Claude but cannot undo what already happened.
 | --- | --- | --- | --- |
 | `protect-files.sh` | PreToolUse `Edit\|Write\|MultiEdit` | edits to `.env*`, lockfiles, and the bot-owned files you list | a hand-edited lockfile or bot file is an unreviewable diff and a conflict on the next bot run |
 | `block-secrets.sh` | PreToolUse `Edit\|Write\|MultiEdit` | content matching AWS, PEM, Slack, GitHub, Anthropic or Google credential patterns | a key in git history must be rotated, and every clone it reached must be found |
-| `git-guards.sh` | PreToolUse `Bash` | `git push --no-verify`; a push from or to a protected branch; a commit that stages (or would stage, via `add -A` / `commit -a`) a submodule pointer unless the message says `bump` or `submodule` | the gate exists to be run; protected branches take PRs only; a silently moved pointer is a regression no test catches |
+| `git-guards.sh` | PreToolUse `Bash` | `git push --no-verify`; a push from or to a protected branch (by name, full ref or `src:dst` refspec, on any remote); a force push other than `--force-with-lease`; `git reset --hard` while tracked files have uncommitted changes; a commit that stages (or would stage, via `add -A` / `commit -a`) a submodule pointer unless the message says `bump` or `submodule` | the gate exists to be run; protected branches take PRs only; a force push or hard reset destroys work nobody reviewed; a silently moved pointer is a regression no test catches |
 | `format-on-write.sh` | PostToolUse `Edit\|Write\|MultiEdit` | nothing (always exit 0); runs the formatter on written source files | hand formatting fails the lint gate at push and buries the change in whitespace |
 | `telemetry.sh` | Stop, SubagentStop | nothing; appends one JSON line per event to `.claude/telemetry/agent-runs.jsonl` | a per-session token and duration record for cost and agent-run reporting |
 
@@ -116,5 +116,3 @@ Things that live in the user file, not the repo, because they are about your mac
 - `permissions.defaultMode`: `default` (ask), `acceptEdits` (file edits without prompts,
   commands still ask), `plan` (read-only until you approve a plan), or `auto` where available
   (a classifier approves routine actions). Pick per machine; the repo's hooks apply in every mode.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

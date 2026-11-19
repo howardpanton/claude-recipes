@@ -188,5 +188,3 @@ Then update `${HANDOVER_DIR}/00-state.md`: REVIEW done (<verdict>).
 
 Verdict, branches to push, count of inline comments, top Critical and Major items. The orchestrator pushes and opens the PR next; merging
 stays with a human.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

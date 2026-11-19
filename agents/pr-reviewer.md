@@ -109,5 +109,3 @@ checks, unvalidated input reaching HTTP), and maintainability.
 - **Admit uncertainty.** If a submodule checkout is stale or detached, a
   pointer cannot be resolved, or intent is unclear, say so and ask for the PR
   description or ticket rather than guessing.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

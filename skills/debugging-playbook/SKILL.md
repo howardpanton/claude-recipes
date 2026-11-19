@@ -95,6 +95,3 @@ paths and keys with yours and add your own.
 - Proxy and mock server: the proxy config path, the mock port, and the config env var.
 - Delete rows that do not apply; add the failure modes your repo has actually seen, each
   with a command.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira,
-Bitbucket, Jenkins).

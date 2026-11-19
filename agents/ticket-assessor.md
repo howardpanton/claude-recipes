@@ -137,5 +137,3 @@ Ready | Needs refinement | Not ready - one sentence, naming the next action if n
 3-5 lines: the readiness verdict, that the tracker edits are proposed in the
 handover and not applied, and that the orchestrator decides whether to pause
 before planning. The handover holds the detail.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

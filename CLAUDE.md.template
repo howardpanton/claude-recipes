@@ -97,6 +97,9 @@ Invoke the owning skill **before** starting work in its area.
 | Audit and remove stale worktrees | `tidy-worktrees` |
 | Docs, CLAUDE.md, skill maintenance | `docs-and-writing` |
 | Design decisions that touch shared plumbing | `architecture-contract` |
+| Raising E2E coverage area by area | `e2e-coverage-campaign` |
+| Customer-facing release notes | `release-notes` |
+| Unattended sweep of the bug board | `bug-board-sweep` |
 
 ## Code style
 

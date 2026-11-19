@@ -1,12 +1,14 @@
 #!/bin/sh
-# PreToolUse (Bash): three git guards in one script, because they share the
+# PreToolUse (Bash): five git guards in one script, because they share the
 # "which directory does this git command run in" resolution.
 #   1. `git push --no-verify` is for human hotfixes only.
 #   2. No push from, or to, a protected branch: PRs only.
-#   3. No commit that stages a submodule pointer unless the message says so.
+#   3. No force push (`--force-with-lease` is allowed).
+#   4. No commit that stages a submodule pointer unless the message says so.
+#   5. No `git reset --hard` while tracked files have uncommitted changes.
 # Reads the hook JSON on stdin. Exit 2 blocks, exit 0 allows.
 #
-# Why (3): in a monorepo of submodules, `git add -A` silently stages whichever
+# Why (4): in a monorepo of submodules, `git add -A` silently stages whichever
 # commit each submodule happens to be checked out at. A pointer that moves
 # backwards as a side effect of an unrelated commit is a regression no test
 # catches, because the code is "right" in every repo on its own.
@@ -40,13 +42,28 @@ case "$c" in
       echo "Blocked: pushing from protected branch $current. Create a feature branch and open a PR." >&2
       exit 2
     fi
-    for b in $PROTECTED_BRANCHES; do
-      # `origin <b>` and `<anything>:<b>`, as the last word or followed by a space.
-      case "$c" in *"origin $b"|*"origin $b "*|*":$b"|*":$b "*)
-        echo "Blocked: direct push to $b. PRs only." >&2
-        exit 2 ;;
+    # The push's own words: everything after `push`, up to the next ; & or |.
+    args=$(printf '%s' "$c" | sed -E 's/.*git([[:space:]]+-C[[:space:]]+[^[:space:]]+)?[[:space:]]+push//; s/[;&|].*//' | tr -d "'\"")
+    force_msg='Blocked: force push. Use --force-with-lease on your own feature branch, or leave it to a human.'
+    remote_seen=0
+    set -f # no globbing while the words are split
+    for w in $args; do
+      case "$w" in
+        --force-with-lease*|--force-if-includes) continue ;;
+        --force|-f|-[!-]*f*) echo "$force_msg" >&2; exit 2 ;;
+        -*) continue ;;
       esac
+      # First plain word is the remote; the rest are refspecs: [+]src[:dst].
+      if [ "$remote_seen" -eq 0 ]; then remote_seen=1; continue; fi
+      case "$w" in +*) echo "$force_msg" >&2; exit 2 ;; esac
+      dst=${w##*:}
+      dst=${dst#refs/heads/}
+      if is_protected "$dst"; then
+        echo "Blocked: direct push to $dst. PRs only." >&2
+        exit 2
+      fi
     done
+    set +f
     ;;
 esac
 
@@ -64,6 +81,15 @@ case "$c" in
         echo 'Blocked: a submodule pointer is staged, or this command would stage one (git add -A / commit -a). If the bump is intentional, say "bump" or "submodule" in the commit message; otherwise stage paths explicitly with git add <path>, or run git restore --staged <submodule-path>.' >&2
         exit 2
       fi
+    fi
+    ;;
+esac
+
+case "$c" in
+  *'git reset --hard'*|*'git '*' reset --hard'*)
+    if [ -n "$(git -C "$d" status --porcelain --untracked-files=no --ignore-submodules=all 2>/dev/null)" ]; then
+      echo 'Blocked: git reset --hard would discard uncommitted changes to tracked files. Commit or stash them first.' >&2
+      exit 2
     fi
     ;;
 esac

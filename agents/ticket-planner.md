@@ -102,5 +102,3 @@ Then update `${HANDOVER_DIR}/00-state.md`: PLAN done, DEVELOP next.
 
 3-5 lines: ticket, scope, biggest risk, path to the plan. The handover holds
 the detail.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

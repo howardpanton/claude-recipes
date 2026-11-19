@@ -133,5 +133,3 @@ you deliberately did not recommend and why.
 - Step 4's local-only file list: whatever your setup copies into a worktree.
 - `apps/<feature>`: your submodule paths; delete the submodule block if none.
 - Step 5: name the PR lookup you actually have (`gh pr list`, Bitbucket API, an MCP).
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

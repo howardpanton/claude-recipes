@@ -190,5 +190,3 @@ Say explicitly when only the root branch was created.
 - Step 2: name your design-planning skill, or delete the step.
 - Branch pattern: change `feature/PROJ-123-short-slug` only if CI parses a
   different shape.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

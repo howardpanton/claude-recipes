@@ -221,5 +221,3 @@ record `MEMORY done` in `00-state.md`. Skip under `--eval`.
   you run coverage campaigns.
 - Design fetch: name your design skill, or delete the row and the step.
 - Finish: map learning topics to your own skills.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

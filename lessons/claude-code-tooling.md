@@ -210,5 +210,3 @@ stored under its own key must be included in the shared reset.
 **Rule:** make each extra configuration a full copy of the one it extends, with a drift guard
 that refuses to build when the copy differs apart from its intended delta. Prove a
 configuration took effect by grepping the output for a string only it compiles in.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

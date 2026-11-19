@@ -102,5 +102,3 @@ seconds. You write files. You do not run commands, commit, push or touch the tra
 Your final message is at most five lines: each memory file written or updated with its
 one-line hook, or `Nothing kept`, plus the path of `05-memory.md`. No file contents and no
 summary of the ticket.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

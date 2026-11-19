@@ -87,5 +87,3 @@ pure modules (`parse.ts`, `format.ts`) with no engine calls, and test those.
 | `ticket-context/` | Status line + `/ticket` pane: the Jira ticket or GitHub issue behind the current branch, the branch, its linked worktree, and related PRs (Bitbucket via MCP, GitHub via `gh`). Tracker-agnostic. | top of `hooks/register.tsx`: Jira site and MCP server names; `JIRA_PROJECTS` in `hooks/parse.ts` |
 | `context-bar/` | A band above the prompt: context-window fill bar with the auto-compact marker, tokens left, cost and rate-limit windows; one toast on the way into the red. | none |
 | `ci-watch/` | Status line + `/ci` pane for CI jobs: the latest build per job, paused approval gates, finished-build toasts, and a warning that an ABORTED deploy may still have applied. Jenkins-flavoured: it reads the Jenkins REST and Pipeline Stage View APIs; another CI needs a new `fetchRun`. | top of `hooks/register.tsx`: host, job paths, deploy labels, poll interval, curl auth |
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).

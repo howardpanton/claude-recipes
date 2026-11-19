@@ -1,5 +1,6 @@
 {
   "name": "handover",
-  "version": "1.0.0",
-  "description": "Session handover documents built for a machine reader: every claim carries evidence, and resuming verifies before it trusts."
+  "version": "1.0.1",
+  "description": "Session handover documents built for a machine reader: every claim carries evidence, and resuming verifies before it trusts.",
+  "license": "MIT"
 }

@@ -145,6 +145,3 @@ cloud-console and SSO work; cross-team asks; pushes to protected branches.
 - Chat tool and thread conventions; the human's reachable channel.
 - Session scheduler commands available in your Claude Code build.
 - The PR review recipe agents self-review with.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira,
-Bitbucket, Jenkins).

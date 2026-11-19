@@ -1,0 +1,29 @@
+{
+  "skill_name": "write-ticket",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a ticket for this bug report: the invoice list shows the wrong total after a filter is cleared.",
+      "expected_output": "Searches for an existing ticket first. Creates a Bug whose description has Context, Where it lives (a named package and file), Acceptance criteria (one testable outcome per bullet, including what must stay unchanged) and Links. Exactly one area label. Reads the ticket back and reports key, URL, type, priority, labels and the link made.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Draft a story for letting users export the invoice list. We haven't decided the file format yet.",
+      "expected_output": "Shows the draft and waits; nothing is created. Because done is not agreed, the first acceptance criterion is to agree the format with a named owner before development, with a product or UX label. Does not invent the format. Not marked ready for development.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Raise a ticket from SRC-1 and link it.",
+      "expected_output": "Fetches SRC-1 with its links and comments. If a linked ticket already exists, stops and reports it instead of creating a duplicate. Otherwise creates the ticket, links it to SRC-1 with Relates, restates the source for a developer rather than pasting it, and leaves screenshots on the source ticket.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Write a task to move the E2E job to a new CI runner, with an estimate.",
+      "expected_output": "Type is Task. The estimate scores Clarity, Verification and Risk from the rubric, with pipeline work scoring high on Verification and Risk, so no fewer than 5 points. The three scores and the reason go in a comment, not in the description.",
+      "files": []
+    }
+  ]
+}

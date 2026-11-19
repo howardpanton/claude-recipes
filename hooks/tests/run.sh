@@ -75,6 +75,14 @@ check 0 git-guards.sh "$(bash_event "cd $repo && git push -u origin feature/PROJ
 check 2 git-guards.sh "$fx/bash-push-to-main.json" "blocks a push to main by refspec"
 check 2 git-guards.sh "$(bash_event "git -C $repo push origin develop")" "blocks a push to develop by name"
 check 0 git-guards.sh "$fx/bash-push-maintenance.json" "allows origin maintenance (no prefix match on main)"
+check 2 git-guards.sh "$(bash_event "git -C $repo push origin HEAD:refs/heads/main")" "blocks a push to main by full ref"
+check 2 git-guards.sh "$(bash_event "git -C $repo push upstream main")" "blocks a push to main on another remote"
+check 2 git-guards.sh "$(bash_event "git -C $repo push origin +main")" "blocks a forced refspec"
+check 2 git-guards.sh "$(bash_event "git -C $repo push origin --delete develop")" "blocks deleting a protected branch"
+check 2 git-guards.sh "$(bash_event "cd $repo && git push --force origin feature/PROJ-123-x")" "blocks --force"
+check 2 git-guards.sh "$(bash_event "git -C $repo push -f")" "blocks -f"
+check 0 git-guards.sh "$(bash_event "git -C $repo push --force-with-lease origin feature/PROJ-123-x")" "allows --force-with-lease on a feature branch"
+check 0 git-guards.sh "$(bash_event "cd $repo && git push origin feature/PROJ-123-x && echo main")" "ignores words after the push in a chained command"
 check 0 git-guards.sh "$fx/bash-non-git.json" "ignores non-git commands"
 
 check 0 git-guards.sh "$(bash_event "git -C $repo commit -m 'wip'")" "allows a commit with nothing staged"
@@ -86,6 +94,9 @@ check 2 git-guards.sh "$(bash_event "git -C $repo commit -am 'wip'")" "blocks co
 check 2 git-guards.sh "$(bash_event "cd $repo && git add -A && git commit -m 'wip'")" "blocks git add -A that would stage the pointer"
 printf 'x\n' >"$repo/f.txt" && git -C "$repo" add f.txt
 check 0 git-guards.sh "$(bash_event "git -C $repo commit -m 'add f.txt'")" "allows a commit of a plain staged file"
+check 2 git-guards.sh "$(bash_event "git -C $repo reset --hard HEAD")" "blocks reset --hard over an uncommitted change"
+git -C "$repo" commit -q -m "Bump: add f.txt"
+check 0 git-guards.sh "$(bash_event "cd $repo && git reset --hard HEAD")" "allows reset --hard on a clean tree"
 
 echo "# format-on-write.sh"
 printf '#!/bin/sh\nprintf formatted >"$1"\n' >"$tmp/fmt.sh"

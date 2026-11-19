@@ -180,5 +180,3 @@ block) is indistinguishable from a real one to a pattern matcher, and history ke
 **Rule:** fixtures hold a placeholder; the test runner assembles the token-shaped value at run
 time from parts (`printf 'xox%s-%s' b ...`), so no file in the repo ever contains the full
 shape. If one slipped into history, rewrite the commit and prune before the repo is public.
-
-Origin: distilled from daily use on a large Angular monorepo of git submodules (Jira, Bitbucket, Jenkins).
